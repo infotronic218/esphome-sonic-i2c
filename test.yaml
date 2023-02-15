@@ -1,0 +1,50 @@
+esphome:
+  name: esp32_test
+
+  libraries:
+    #- "M5Stack"
+    - "Wire"
+    - "SPI"
+    - "FS"
+    - "SPIFFS"
+    - "SD"
+    - "M5Unit-Sonic"
+    #- "HTTPClient"
+    #- "WiFiClient"
+  
+external_components:
+    - source:
+        type: local
+        path: components 
+
+      components: [sonic_i2c]
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "update"
+
+ota:
+  password: "update"
+
+wifi:
+  ssid: "Livebox-36B0"
+  password: "4CHfRsdx9C9c8VdH2t"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32 Test Fallback Hotspot"
+    password: "ezOUB4lHEavi"
+
+sonic_i2c:
+
+
+
+    
