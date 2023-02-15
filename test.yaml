@@ -31,8 +31,8 @@ logger:
 api:
   password: "update"
 
-#ota:
-#  password: "update"
+ota:
+  password: "update"
 
 wifi:
   ssid: "Livebox-36B0"

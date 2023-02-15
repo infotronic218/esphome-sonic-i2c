@@ -3,6 +3,7 @@
 
 namespace esphome{
 static const char * TAG = "SONIC SENSOR" ;
+//static SONIC_I2C sensor ;
 namespace sonic_i2c_sensor{
  SonicI2C::SonicI2C(){
   // Init the sensor class 
@@ -24,11 +25,20 @@ void SonicI2C::loop(){
   long last = 0 ;
 
    while(1){
+
+      
+      
        this->value = this->sensor->getDistance();
        if(millis()-last>delay_ms){
-          ESP_LOGI(TAG, "Distance value : %.2f", this->value);
+         if(this->value>=4500|| this->value<=20){
+            ESP_LOGI(TAG, "Incorrect Distance Reading");
+         }else{
+            ESP_LOGI(TAG, "Distance value : %.2f", this->value);
+         }
+          
           last = millis();
        }
+       
        
    }
 }

@@ -5,8 +5,6 @@ from esphome.const import CONF_DATA, CONF_SEND_EVERY
 from esphome.const import CONF_ID
 from esphome.core import CORE, coroutine_with_priority
 
-#DEPENDENCIES = ["M5Stack"]
-#AUTO_LOAD = ["json"]
 sonic_sensor_ns = cg.esphome_ns.namespace("sonic_i2c_sensor")
 SonicI2C = sonic_sensor_ns.class_("SonicI2C", cg.Component)
 
