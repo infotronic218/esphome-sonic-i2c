@@ -26,7 +26,7 @@ void SonicI2C::loop(){
    while(1){
        this->value = this->sensor->getDistance();
        if(millis()-last>delay_ms){
-          ESP_LOGI(TAG, "Value : %.2f", this->value);
+          ESP_LOGI(TAG, "Distance value : %.2f", this->value);
           last = millis();
        }
        
