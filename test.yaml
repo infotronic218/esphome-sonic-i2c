@@ -43,7 +43,7 @@ wifi:
     ssid: "Esp32 Test Fallback Hotspot"
     password: "ezOUB4lHEavi"
 
-#sensor configuration
+# SONIC I2C sensor configuration
 sensor:
  - platform: sonic_i2c
    id: test
