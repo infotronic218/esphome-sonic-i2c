@@ -1,5 +1,6 @@
 #include"sonic_i2c.h"
 #include<Wire.h>
+#include "pins_arduino.h"
 
 namespace esphome{
 static const char * TAG = "SONIC SENSOR" ;
