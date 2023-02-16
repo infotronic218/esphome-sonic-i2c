@@ -46,10 +46,21 @@ wifi:
 # SONIC I2C sensor configuration
 sensor:
  - platform: sonic_i2c
-   id: test
+   name: Distance Sensor
+   unit_of_measurement: mm
    sda_pin: 25
    scl_pin: 23
    update_interval: 5s
+
+
+# Switch Connected to ESP32 LED a GPIO2
+switch:
+  - platform: gpio
+    name: "build_in_led"
+    pin: 2
+
+web_server:
+  port: 80 
 
 
 

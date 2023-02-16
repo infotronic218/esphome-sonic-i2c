@@ -6,7 +6,7 @@ from esphome.const import (
  
     CONF_TIMEOUT,
     STATE_CLASS_MEASUREMENT,
-    UNIT_METER,
+    UNIT_METER, 
     ICON_ARROW_EXPAND_VERTICAL,
 )
 
@@ -30,8 +30,6 @@ CONFIG_SCHEMA = (
         {
             cv.Required(CONF_SDA_PIN): int,
             cv.Required(CONF_SCL_PIN): int,
-            #cv.Optional(CONF_TIMEOUT, default="2m"): cv.distance,
-            #cv.Optional(CONF_PULSE_TIME, default="10us"): cv.positive_time_period_microseconds,
         }
     )
     .extend(cv.polling_component_schema("60s"))
@@ -41,10 +39,7 @@ CONFIG_SCHEMA = (
 async def to_code(config):
     var = await sensor.new_sensor(config)
     await cg.register_component(var, config)
-
-    #trigger = await cg.gpio_pin_expression(config[CONF_sda_PIN])
     cg.add(var.set_sda_pin(config[CONF_SDA_PIN]))
-    #echo = await cg.gpio_pin_expression(config[CONF_ECHO_PIN])
     cg.add(var.set_scl_pin(config[CONF_SCL_PIN]))
 
     #cg.add(var.set_timeout_us(config[CONF_TIMEOUT] / (0.000343 / 2)))
