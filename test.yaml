@@ -2,15 +2,7 @@ esphome:
   name: esp32_test
 
   libraries:
-    #- "M5Stack"
-    - "Wire"
-    - "SPI"
-    - "FS"
-    - "SPIFFS"
-    - "SD"
-    - "M5Unit-Sonic"
-    #- "HTTPClient"
-    #- "WiFiClient"
+
   
 external_components:
     - source:
