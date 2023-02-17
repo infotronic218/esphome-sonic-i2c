@@ -17,7 +17,7 @@ external_components:
         type: local
         path: components 
 
-      components: [sonic_i2c]
+      components: [sonic_i2c, mfrc522_i2c]
 
 esp32:
   board: esp32dev
@@ -56,6 +56,25 @@ sensor:
    name: Distance Sensor
    unit_of_measurement: mm
    update_interval: 5s
+
+
+# RFID SENSOR 
+mfrc522_i2c:
+  i2c_id: bus_i2c
+  address: 0x28
+  on_tag:
+    then:
+      - homeassistant.tag_scanned: !lambda 'return x;'
+# Link the RFID reader to binary sensor
+binary_sensor:
+  - platform: rc522
+    uid: 74-10-37-94
+    name: "RC522 RFID Tag"
+
+
+
+
+
 
 
 # Switch Connected to ESP32 LED a GPIO2
