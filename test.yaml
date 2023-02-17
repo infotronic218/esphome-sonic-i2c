@@ -43,13 +43,18 @@ wifi:
     ssid: "Esp32 Test Fallback Hotspot"
     password: "ezOUB4lHEavi"
 
+
+i2c:
+  id: bus_i2c
+  sda: 25
+  scl: 23
 # SONIC I2C sensor configuration
 sensor:
  - platform: sonic_i2c
+   i2c_id: bus_i2c
+   address: 0x57
    name: Distance Sensor
    unit_of_measurement: mm
-   sda_pin: 25
-   scl_pin: 23
    update_interval: 5s
 
 
