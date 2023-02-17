@@ -58,23 +58,18 @@ sensor:
    update_interval: 5s
 
 
-# RFID SENSOR 
+# RFID SENSOR with binary sensor
 mfrc522_i2c:
   i2c_id: bus_i2c
-  address: 0x28
+  address: 0x28 # I2C adress 
   on_tag:
     then:
       - homeassistant.tag_scanned: !lambda 'return x;'
 # Link the RFID reader to binary sensor
 binary_sensor:
   - platform: rc522
-    uid: 74-10-37-94
+    uid: 74-10-37-94 # Change this to match the TAG ID 
     name: "RC522 RFID Tag"
-
-
-
-
-
 
 
 # Switch Connected to ESP32 LED a GPIO2
@@ -85,8 +80,5 @@ switch:
 
 web_server:
   port: 80 
-
-
-
 
     
