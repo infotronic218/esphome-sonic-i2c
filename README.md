@@ -1,10 +1,9 @@
 # esphome Component implementation
-Custom component implementation for esphome 
+Custom components implementation for esphome 
 # Implemented components
 * [SONIC I2C] Ultra sonic sensor over the I2C interface
 
 * [MFRC522 RFID I2C] Ultra sonic sensor over the I2C interface
-### Refere to ESPHOME RFID sensor setup  over the I2C interface
 
 * [MLX90614 ] Infrared Temperature sensor from Adafruit implementation
 
