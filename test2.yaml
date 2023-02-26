@@ -1,0 +1,90 @@
+esphome:
+  name: esp32_test
+
+  libraries:
+    - Wire
+    - SPI
+    - adafruit/Adafruit BusIO @ 1.9.6
+    - "Adafruit MLX90614 Library"
+
+  
+external_components:
+    - source:
+        type: local
+        path: components 
+
+      components: [sonic_i2c, mfrc522_i2c, mlx90614]
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "update"
+
+ota:
+  password: "update"
+
+wifi:
+  ssid: "Livebox-36B0"
+  password: "4CHfRsdx9C9c8VdH2t"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32 Test Fallback Hotspot"
+    password: "ezOUB4lHEavi"
+
+
+i2c:
+  id: bus_i2c
+  sda: 25
+  scl: 23
+# SONIC I2C sensor configuration
+
+sonic_i2c:
+   i2c_id: bus_i2c
+   address: 0x57
+   name: Distance Sensor
+   unit_of_measurement: mm
+   update_interval: 5s
+
+mlx90614:
+  ambient_temperature:
+    name: "Ambient temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+  object_temperature:
+    name: "Object temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+
+
+# RFID SENSOR with binary sensor
+mfrc522_i2c:
+  i2c_id: bus_i2c
+  address: 0x28 # I2C adress 
+  on_tag:
+    then:
+      - homeassistant.tag_scanned: !lambda 'return x;'
+# Link the RFID reader to binary sensor
+binary_sensor:
+  - platform: rc522
+    uid: 74-10-37-94 # Change this to match the TAG ID 
+    name: "RC522 RFID Tag"
+
+
+# Switch Connected to ESP32 LED a GPIO2
+switch:
+  - platform: gpio
+    name: "build_in_led"
+    pin: 2
+
+web_server:
+  port: 80 
+
+    
