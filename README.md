@@ -9,7 +9,27 @@ Custom components implementation for esphome
 
 # Components Usage 
 
-Refer to the  [test.yaml](test.yaml) and [test_update.yaml](test_update.yaml) as configuration examples for components usage.
+Refer to the  [test_update.yaml](test_update.yaml) as configuration examples for the implemented compoments. 
+
+* Loading dependencies  and components loading
+``` yaml
+esphome:
+  name: esp32_test
+
+  libraries:
+    - Wire
+    - SPI
+    - adafruit/Adafruit BusIO @ 1.9.6
+    #- "Adafruit MLX90614 Library"
+
+  
+external_components:
+    - source:
+        type: local
+        path: components 
+
+      components: [sonic_i2c, mfrc522_i2c, mlx90614]
+```
 
 * Sonic I2C sensor Configuration
 
