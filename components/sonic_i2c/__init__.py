@@ -15,6 +15,7 @@ CONF_SCL_PIN = "scl_pin"
 CONF_I2C_ADDR = 0x57
 
 CONF_PULSE_TIME = "pulse_time"
+MULTI_CONF = True
 
 DEPENDENCIES = ['i2c']
 AUTO_LOAD = ["sensor"]
