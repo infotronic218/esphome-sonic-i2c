@@ -10,8 +10,8 @@ namespace mlx_90614{
 class MLX90614Sensor : public PollingComponent {
     private:
     Adafruit_MLX90614 mlx;
-    sensor::Sensor *ambient_temperature_sensor;
-    sensor::Sensor *object_temperature_sensor;
+    sensor::Sensor *ambient_temperature_sensor{nullptr};
+    sensor::Sensor *object_temperature_sensor{nullptr};
 
   public:
 
