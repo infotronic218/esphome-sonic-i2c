@@ -2,7 +2,7 @@
 
 #include "esphome/core/component.h"
 #include "esphome/core/hal.h"
-#include "esphome/components/i2c/i2c.h"
+//#include "esphome/components/i2c/i2c.h"
 #include "porthub.h"
 namespace esphome {
 namespace m5stack_pbhub {

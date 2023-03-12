@@ -1,6 +1,9 @@
 #include "m5stack_pbhub.h"
 #include "esphome/core/log.h"
 
+
+static const uint8_t HUB_ADDR[6] = {HUB1_ADDR, HUB2_ADDR, HUB3_ADDR,
+                       HUB4_ADDR, HUB5_ADDR, HUB6_ADDR};
 namespace esphome {
 namespace m5stack_pbhub {
 
@@ -8,16 +11,19 @@ static const char *const TAG = "m5stack_pbhub";
 
 void M5StackPBHUBComponent::setup() {
   ESP_LOGCONFIG(TAG, "Setting up M5Stack PBHUB...");
-
-  this->portHub = new PortHub(/*this->address_, &Wire*/);
+  ESP_LOGCONFIG(TAG, "I2C Address : %x ",this->address_);
+  ESP_LOGCONFIG(TAG, "SDA : %d ; SCL :  %d ", this->sda_ , this->scl_);
+  Wire.begin(this->sda_ , this->scl_) ;
+  this->portHub = new PortHub(this->address_, &Wire);
+  /*
   if (!this->read_gpio_()) {
     ESP_LOGE(TAG, "PBHUB not available under 0x%02X", this->address_);
     this->mark_failed();
     return;
-  }
+  }*/
 
-  this->write_gpio_();
-  this->read_gpio_();
+  //this->write_gpio_();
+  //this->read_gpio_();
 }
 void M5StackPBHUBComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "PBHUB:");
@@ -28,20 +34,23 @@ void M5StackPBHUBComponent::dump_config() {
   }
 }
 bool M5StackPBHUBComponent::digital_read(uint8_t pin) {
-  this->read_gpio_();
-  return this->input_mask_ & (1 << pin);
+  /*this->read_gpio_();
+  return this->input_mask_ & (1 << pin);*/
+  return portHub->hub_d_read_value_A(HUB_ADDR[pin]);
 }
 void M5StackPBHUBComponent::digital_write(uint8_t pin, bool value) {
+  portHub->hub_d_wire_value_A(HUB_ADDR[pin],value );
+  /*
   if (value) {
     this->output_mask_ |= (1 << pin);
   } else {
     this->output_mask_ &= ~(1 << pin);
-  }
+  }*/
 
-  this->write_gpio_();
+  //this->write_gpio_();
 }
 void M5StackPBHUBComponent::pin_mode(uint8_t pin, gpio::Flags flags) {
-  if (flags == gpio::FLAG_INPUT) {
+  /*if (flags == gpio::FLAG_INPUT) {
     // Clear mode mask bit
     this->mode_mask_ &= ~(1 << pin);
     // Write GPIO to enable input mode
@@ -49,7 +58,7 @@ void M5StackPBHUBComponent::pin_mode(uint8_t pin, gpio::Flags flags) {
   } else if (flags == gpio::FLAG_OUTPUT) {
     // Set mode mask bit
     this->mode_mask_ |= 1 << pin;
-  }
+  }*/
 }
 bool M5StackPBHUBComponent::read_gpio_() {
   /*

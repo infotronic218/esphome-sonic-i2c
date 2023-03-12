@@ -11,7 +11,7 @@ from esphome.const import (
     CONF_OUTPUT,
 )
 
-DEPENDENCIES = ["i2c"]
+#DEPENDENCIES = ["i2c"]
 MULTI_CONF = True
 CONF_SDA_PIN = "sda"
 CONF_SCL_PIN = "scl"
