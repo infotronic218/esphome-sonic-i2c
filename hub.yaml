@@ -1,0 +1,119 @@
+esphome:
+  name: esp32_test
+
+  libraries:
+    - Wire
+    - SPI
+    - adafruit/Adafruit BusIO @ 1.9.6
+    #- "Adafruit MLX90614 Library"
+
+  
+external_components:
+    - source:
+        type: local
+        path: components 
+
+      components: [sonic_i2c, mfrc522_i2c, mlx90614, m5stack_pbhub]
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "update"
+
+ota:
+  password: "update"
+
+wifi:
+  ssid: "Livebox-36B0"
+  password: "4CHfRsdx9C9c8VdH2t"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32 Test Fallback Hotspot"
+    password: "ezOUB4lHEavi"
+
+
+i2c:
+  id: bus_i2c
+  sda: 25
+  scl: 23
+# SONIC I2C sensor configuration
+
+# Sonic I2C sensor Configuration
+sonic_i2c: 
+   i2c_id: bus_i2c
+   address: 0x57
+   name: Distance Sensor
+   unit_of_measurement: mm
+   update_interval: 5s
+
+# MLX90614 Configuration
+mlx90614:
+  ambient_temperature: # Ambient temperature
+    name: "Ambient temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+  object_temperature: # Object temperature
+    name: "Object temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+
+
+# RFID SENSOR with binary sensor
+mfrc522_i2c:
+  i2c_id: bus_i2c
+  address: 0x28 # I2C adress 
+  on_tag:
+    then:
+      - homeassistant.tag_scanned: !lambda 'return x;'
+
+
+
+
+
+
+m5stack_pbhub:
+  - id: 'M5Stack_HUB'
+    address: 0x20
+    sda: 10
+    scl: 20
+
+# Individual outputs
+switch:
+  - platform: gpio
+    name: "MCP23008 Pin #0"
+    pin:
+      m5stack_pbhub: M5Stack_HUB
+      # Use pin number 0
+      number: 0
+      mode:
+        output: true
+      inverted: false
+
+# Link the RFID reader to binary sensor
+binary_sensor:
+  - platform: rc522
+    uid: 74-10-37-94 # Change this to match the TAG ID 
+    name: "RC522 RFID Tag"
+  - platform: gpio
+    name: "MCP23008 Pin #0"
+    pin:
+      m5stack_pbhub: M5Stack_HUB
+      # Use pin number 0
+      number: 1
+      mode:
+        output: true
+      inverted: false
+
+
+web_server:
+  port: 80 
+
+    
