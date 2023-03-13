@@ -3,9 +3,9 @@
 PortHub::PortHub() {
 }
 
-PortHub::PortHub(uint8_t iic_addr, TwoWire *wire) {
+PortHub::PortHub(uint8_t iic_addr, TwoWire *wire_) {
     _iic_addr = iic_addr;
-    this->wire = wire ;
+    this->wire = wire_ ;
 }
 
 void PortHub::begin() {

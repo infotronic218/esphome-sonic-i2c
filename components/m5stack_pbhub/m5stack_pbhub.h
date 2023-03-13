@@ -27,7 +27,6 @@ class M5StackPBHUBComponent : public Component/*, public i2c::I2CDevice*/ {
   void set_sda_pin(uint8_t sda){this->sda_ = sda ;}
   void set_scl_pin(uint8_t scl){this->scl_ = scl ;}
   void set_address(uint8_t addr){this->address_ = addr ;}
- protected:
   bool read_gpio_();
   PortHub *portHub;
   bool write_gpio_();
