@@ -40,8 +40,14 @@ bool M5StackPBHUBComponent::digital_read(uint8_t pin) {
   return portHub->hub_d_read_value_A(HUB_ADDR[pin]);
 }
 void M5StackPBHUBComponent::digital_write(uint8_t pin, bool value) {
-  portHub->hub_d_wire_value_A(HUB_ADDR[pin],value );
-  portHub->hub_d_wire_value_B(HUB_ADDR[pin],value );
+  if(value){
+     portHub->hub_d_wire_value_A(HUB_ADDR[pin],0xFFFF);
+     portHub->hub_d_wire_value_B(HUB_ADDR[pin],0xFFFF );
+  }else{
+   portHub->hub_d_wire_value_A(HUB_ADDR[pin],0);
+   portHub->hub_d_wire_value_B(HUB_ADDR[pin],0 );
+  }
+  
   /*
   if (value) {
     this->output_mask_ |= (1 << pin);
