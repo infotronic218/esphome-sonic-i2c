@@ -14,7 +14,7 @@ void M5StackPBHUBComponent::setup() {
   ESP_LOGCONFIG(TAG, "I2C Address : %x ",this->address_);
   ESP_LOGCONFIG(TAG, "SDA : %d ; SCL :  %d ", this->sda_ , this->scl_);
   Wire.begin(this->sda_ , this->scl_) ;
-  this->scan_devices(&Wire);
+  //this->scan_devices(&Wire);
   this->portHub = new PortHub(this->address_, &Wire);
   /*
   if (!this->read_gpio_()) {
