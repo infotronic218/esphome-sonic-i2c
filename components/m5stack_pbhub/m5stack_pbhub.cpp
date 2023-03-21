@@ -23,6 +23,7 @@ void M5StackPBHUBComponent::setup() {
   }*/
   this->portHub = new PortHub(this->address_, &Wire);
   
+  
 }
 void M5StackPBHUBComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "PBHUB:");
