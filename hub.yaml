@@ -4,7 +4,6 @@ esphome:
   libraries:
     - Wire
 
-  
 external_components:
     - source:
         type: local

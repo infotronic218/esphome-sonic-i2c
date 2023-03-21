@@ -14,14 +14,15 @@ void M5StackPBHUBComponent::setup() {
   ESP_LOGCONFIG(TAG, "I2C Address : %x ",this->address_);
   ESP_LOGCONFIG(TAG, "SDA : %d ; SCL :  %d ", this->sda_ , this->scl_);
   Wire.begin(this->sda_ , this->scl_) ;
-  //this->scan_devices(&Wire);
+  Wire.beginTransmission(this->address_);
+  if(Wire.endTransmission()!=0){
+    // Check if there is a device connected 
+     ESP_LOGE(TAG, "PBHUB not available under 0x%02X", this->address_);
+     this->mark_failed();
+     return;
+  }
   this->portHub = new PortHub(this->address_, &Wire);
-  /*
-  if (!this->read_gpio_()) {
-    ESP_LOGE(TAG, "PBHUB not available under 0x%02X", this->address_);
-    this->mark_failed();
-    return;
-  }*/
+  
 }
 void M5StackPBHUBComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "PBHUB:");
@@ -37,6 +38,7 @@ bool M5StackPBHUBComponent::digital_read(uint8_t pin) {
   }else if(pin==1){
    return  portHub->hub_d_read_value_A(HUB_ADDR[pin]);
   }
+  // Find the real pin number from the pin 
   uint8_t pin2 = pin /10 ;
   if(pin%2==0){
    return  portHub->hub_d_read_value_B(HUB_ADDR[pin2]);
@@ -58,56 +60,14 @@ void M5StackPBHUBComponent::digital_write(uint8_t pin, bool value) {
   portHub->hub_d_wire_value_A(HUB_ADDR[pin],val);
 }
 void M5StackPBHUBComponent::pin_mode(uint8_t pin, gpio::Flags flags) {
-  /*if (flags == gpio::FLAG_INPUT) {
-    // Clear mode mask bit
-    this->mode_mask_ &= ~(1 << pin);
-    // Write GPIO to enable input mode
-    this->write_gpio_();
-  } else if (flags == gpio::FLAG_OUTPUT) {
-    // Set mode mask bit
-    this->mode_mask_ |= 1 << pin;
-  }*/
+ // No pin mode configuration required
 }
 bool M5StackPBHUBComponent::read_gpio_() {
-  /*
-  if (this->is_failed())
-    return false;
-  bool success;
-  uint8_t data[2];
-  if (false) {
-    success = this->read_bytes_raw(data, 2);
-    this->input_mask_ = (uint16_t(data[1]) << 8) | (uint16_t(data[0]) << 0);
-  } else {
-    success = this->read_bytes_raw(data, 1);
-    this->input_mask_ = data[0];
-  }
-
-  if (!success) {
-    this->status_set_warning();
-    return false;
-  }
-  this->status_clear_warning();*/
+  //Not implemented
   return true;
 }
-bool M5StackPBHUBComponent::write_gpio_() {/*
-  if (this->is_failed())
-    return false;
-
-  uint16_t value = 0;
-  // Pins in OUTPUT mode and where pin is HIGH.
-  value |= this->mode_mask_ & this->output_mask_;
-  // Pins in INPUT mode must also be set here
-  value |= ~this->mode_mask_;
-
-  uint8_t data[2];
-  data[0] = value;
-  data[1] = value >> 8;
-  if (this->write(data, 1) != i2c::ERROR_OK) {
-    this->status_set_warning();
-    return false;
-  }
-
-  this->status_clear_warning();*/
+bool M5StackPBHUBComponent::write_gpio_() {
+  //Not implemented
   return true;
 }
 void M5StackPBHUBComponent::scan_devices(TwoWire *wire_ ){
