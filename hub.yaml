@@ -37,6 +37,14 @@ wifi:
     password: "ezOUB4lHEavi"
 
 # Configuring the GPIO Hub with Arduino I2C
+
+#Pin numberring in the PbHUB (The first digit is the channel number and the second digit is the pin number)
+# CHANNEL 0 : 00 and 01
+# CHANNEL 1 : 10 and 11
+# CHANNEL 2 : 20 and 21
+# CHANNEL 3 : 30 and 31
+# CHANNEL 4 : 40 and 41
+# CHANNEL 5 : 50 and 51
 m5stack_pbhub:
   - id: 'M5Stack_HUB'
     address: 0x61 # I2C Address
@@ -46,11 +54,21 @@ m5stack_pbhub:
 # Link the m5stack_pbhub to a switch 
 switch:
   - platform: gpio
-    name: "PBHUB pin #0"
+    name: "Light on PBHUB Channel 0 pin #0"
     pin:
       m5stack_pbhub: M5Stack_HUB
       # Use pin number 0
-      number: 0
+      number: 00
+      mode:
+        output: true
+      inverted: false
+      
+  - platform: gpio
+    name: "Pumps on PBHUB pin #1"
+    pin:
+      m5stack_pbhub: M5Stack_HUB
+      # Use pin number 0
+      number: 60
       mode:
         output: true
       inverted: false
@@ -58,11 +76,20 @@ switch:
 # Link the m5stack_pbhub to a  binary sensor
 binary_sensor:
   - platform: gpio
-    name: "PBHUB pin #1"
+    name: "Dual Button on PBHUB Channel 2 Pin 0"
     pin:
       m5stack_pbhub: M5Stack_HUB
       # Use pin number 0
-      number: 1
+      number: 20
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    name: "Dual Button on PBHUB Channel 2 Pin 1"
+    pin:
+      m5stack_pbhub: M5Stack_HUB
+      # Use pin number 0
+      number: 21
       mode:
         output: true
       inverted: false

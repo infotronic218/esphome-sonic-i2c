@@ -22,9 +22,6 @@ void M5StackPBHUBComponent::setup() {
     this->mark_failed();
     return;
   }*/
-
-  //this->write_gpio_();
-  //this->read_gpio_();
 }
 void M5StackPBHUBComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "PBHUB:");
@@ -35,27 +32,30 @@ void M5StackPBHUBComponent::dump_config() {
   }
 }
 bool M5StackPBHUBComponent::digital_read(uint8_t pin) {
-  /*this->read_gpio_();
-  return this->input_mask_ & (1 << pin);*/
-  return portHub->hub_d_read_value_A(HUB_ADDR[pin]);
+  if (pin==0){
+    return portHub->hub_d_read_value_B(HUB_ADDR[pin]);
+  }else if(pin==1){
+   return  portHub->hub_d_read_value_A(HUB_ADDR[pin]);
+  }
+  uint8_t pin2 = pin /10 ;
+  if(pin%2==0){
+   return  portHub->hub_d_read_value_B(HUB_ADDR[pin2]);
+  }
+  return portHub->hub_d_read_value_A(HUB_ADDR[pin2]);
+  
 }
 void M5StackPBHUBComponent::digital_write(uint8_t pin, bool value) {
-  if(value){
-     portHub->hub_d_wire_value_A(HUB_ADDR[pin],0xFF);
-     portHub->hub_d_wire_value_B(HUB_ADDR[pin],0xFF);
-  }else{
-   portHub->hub_d_wire_value_A(HUB_ADDR[pin],0);
-   portHub->hub_d_wire_value_B(HUB_ADDR[pin],0 );
+  uint8_t val = value?0xFF: 0 ;
+  if (pin==0){
+    portHub->hub_d_wire_value_B(HUB_ADDR[pin],val);
+  }else if(pin==1){
+   portHub->hub_d_wire_value_A(HUB_ADDR[pin],val);
   }
-  
-  /*
-  if (value) {
-    this->output_mask_ |= (1 << pin);
-  } else {
-    this->output_mask_ &= ~(1 << pin);
-  }*/
-
-  //this->write_gpio_();
+  uint8_t pin2 = pin /10 ;
+  if(pin%2==0){
+   portHub->hub_d_wire_value_B(HUB_ADDR[pin],val);
+  }
+  portHub->hub_d_wire_value_A(HUB_ADDR[pin],val);
 }
 void M5StackPBHUBComponent::pin_mode(uint8_t pin, gpio::Flags flags) {
   /*if (flags == gpio::FLAG_INPUT) {

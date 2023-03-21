@@ -54,12 +54,19 @@ def validate_mode(value):
         raise cv.Invalid("Mode must be either input or output")
     return value
 
+def validate_hub_pins(value):
+    value2 = int(value)
+    tab = [00, 1, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51]
+    if not (value2 in tab):
+        raise cv.Invalid("The pin number should contain the Hub channel with the pin number. \n\rValid configuration are : 00, 01, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51")
+    return value
 
 M5StackPBHUB_PIN_SCHEMA = cv.All(
     {
         cv.GenerateID(): cv.declare_id(PBHUBGPIOPin),
         cv.Required(CONF_M5StackPBHUB): cv.use_id(M5StackPBHUBComponent),
-        cv.Required(CONF_NUMBER): cv.int_range(min=0, max=17),
+        #cv.Required(CONF_NUMBER): cv.int_range(min=0, max=51),
+        cv.Required(CONF_NUMBER): cv.All(validate_hub_pins,),
         cv.Optional(CONF_MODE, default={}): cv.All(
             {
                 cv.Optional(CONF_INPUT, default=False): cv.boolean,
