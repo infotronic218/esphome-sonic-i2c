@@ -14,8 +14,8 @@ void M5StackPBHUBComponent::setup() {
   ESP_LOGCONFIG(TAG, "I2C Address : %x ",this->address_);
   ESP_LOGCONFIG(TAG, "SDA : %d ; SCL :  %d ", this->sda_ , this->scl_);
   Wire.begin(this->sda_ , this->scl_) ;
-  Wire.beginTransmission(this->address_);
-  /*if(Wire.endTransmission()!=0){
+  /*Wire.beginTransmission(this->address_);
+  if(Wire.endTransmission()!=0){
     // Check if there is a device connected 
      ESP_LOGE(TAG, "PBHUB not available under 0x%02X", this->address_);
      this->mark_failed();
