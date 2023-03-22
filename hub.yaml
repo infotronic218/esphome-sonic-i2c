@@ -5,10 +5,14 @@ esphome:
     - Wire
 
 external_components:
+#    - source:
+#        type: local
+#        path: components 
+#     components: [m5stack_pbhub]
     - source:
-        type: local
-        path: components 
-
+        type: git
+        url: https://github.com/infotronic218/esphome-sonic-i2c 
+        ref: main
       components: [m5stack_pbhub]
 
 esp32:
