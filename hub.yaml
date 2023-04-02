@@ -5,15 +5,15 @@ esphome:
     - Wire
 
 external_components:
+  - source:
+      type: local
+      path: components 
+    components: [m5stack_pbhub]
 #    - source:
-#        type: local
-#        path: components 
-#     components: [m5stack_pbhub]
-    - source:
-        type: git
-        url: https://github.com/infotronic218/esphome-sonic-i2c 
-        ref: main
-      components: [m5stack_pbhub]
+#        type: git
+#        url: https://github.com/infotronic218/esphome-sonic-i2c 
+#        ref: main
+#      components: [m5stack_pbhub]
 
 esp32:
   board: esp32dev
@@ -67,15 +67,23 @@ switch:
       inverted: false
       
   - platform: gpio
-    name: "Pumps on PBHUB Channel #0 pin #1"
+    name: "Pumps 1 on PBHUB Channel #1 pin #0"
     pin:
       m5stack_pbhub: M5Stack_HUB
       # Use pin number 0
-      number: 01
+      number: 10
       mode:
         output: true
       inverted: false
-
+  - platform: gpio
+    name: "Pumps 2 on PBHUB Channel #3 pin #0"
+    pin:
+      m5stack_pbhub: M5Stack_HUB
+      # Use pin number 0
+      number: 30
+      mode:
+        output: true
+      inverted: false
 # Link the m5stack_pbhub to a  binary sensor
 binary_sensor:
   - platform: gpio
