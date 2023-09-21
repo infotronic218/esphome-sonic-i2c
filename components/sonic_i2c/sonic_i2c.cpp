@@ -8,7 +8,7 @@ namespace sonic_i2c_sensor{
 
 void SonicI2C::dump_config() {
   LOG_SENSOR(TAG, "Ultrasonic Sensor", this);
-  ESP_LOGD(TAG , "I2C Address :  %x", this->address_);
+  ESP_LOGD(TAG , "Sonci Sensor I2C Address :  %x", this->address_);
   LOG_UPDATE_INTERVAL(this);
 }
 

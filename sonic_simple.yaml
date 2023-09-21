@@ -43,13 +43,18 @@ i2c:
 # SONIC I2C sensor configuration
 
 # SONIC I2C sensor configuration
-
-
-sensor:
- - platform: sonic_i2c
+# Can only use one sensor 
+sonic_i2c:
    i2c_id: bus_i2c
    address: 0x57
    name: Distance Sensor 2
+   unit_of_measurement: mm
+   update_interval: 5s
+
+sonic_i2c:
+   i2c_id: bus_i2c
+   address: 0x57
+   name: Distance Sensor
    unit_of_measurement: mm
    update_interval: 5s
 
