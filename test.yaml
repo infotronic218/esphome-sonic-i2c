@@ -41,6 +41,12 @@ i2c:
   sda: 25
   scl: 23
 # SONIC I2C sensor configuration
+sonic_i2c:
+   i2c_id: bus_i2c
+   address: 0x57
+   name: Distance Sensor
+   unit_of_measurement: mm
+   update_interval: 5s
 sensor:
  - platform: sonic_i2c
    i2c_id: bus_i2c
